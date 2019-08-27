@@ -1,6 +1,6 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as zxcvbn from 'zxcvbn';
-import { FormBuilder, FormGroup} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-credentials-form',
@@ -17,8 +17,8 @@ export class CredentialsFormComponent implements OnInit {
 
   ngOnInit() {
     this.credentialsForm = this.formBuilder.group({
-      email: '',
-      password: ''
+      email: ['', Validators.required],
+      password: ['', Validators.required]
     });
     this.onChanges();
   }
