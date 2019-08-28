@@ -10,15 +10,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class CredentialsFormComponent implements OnInit {
 
   private passwordStrengthScore: number;
-  private passwordStrength: string;
+  public passwordStrength: string;
   credentialsForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
     this.credentialsForm = this.formBuilder.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required]
+      email: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+      passwordStrengthScore: [0, [Validators.min(2)]]
     });
     this.onChanges();
   }
@@ -41,6 +42,7 @@ export class CredentialsFormComponent implements OnInit {
 
   updateStrength(val) {
     this.passwordStrengthScore = zxcvbn(val).score;
+    this.credentialsForm.controls.passwordStrengthScore.setValue(this.passwordStrengthScore);
     switch (this.passwordStrengthScore) {
       case 2:
         this.passwordStrength = 'weak';
